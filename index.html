@@ -3,16 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carbon Footprint Quiz</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Carbon Footprint Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label { display: block; margin: 10px 0 5px; }
+        select, button { margin-bottom: 15px; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Carbon Footprint Quiz</h1>
-        <div id="quiz"></div>
-        <button id="nextBtn" class="btn" style="display:none;">Next</button>
-        <button id="submitBtn" class="btn" style="display:none;">Submit</button>
-    </div>
-    <script src="script1.js"></script>
+    <h1>Carbon Footprint Calculator</h1>
+    <form id="footprintForm">
+        <label for="diet">What is the regular diet you consume?</label>
+        <select id="diet" required>
+            <option value="2.5">Vegetarian (+2.5 kg CO2/day)</option>
+            <option value="4">Non Vegetarian (+4 kg CO2/day)</option>
+        </select>
+
+        <label for="transport">What is your regular mode of transport?</label>
+        <select id="transport" required>
+            <option value="1.47">Public transport (+1.47 kg CO2/day)</option>
+            <option value="2.95">Electric vehicle (+2.95 kg CO2/day)</option>
+            <option value="3.02">Fuel powered vehicle (+3.02 kg CO2/day)</option>
+            <option value="1.02">Two-wheeler (+1.02 kg CO2/day)</option>
+        </select>
+
+        <label for="groceries">Where do you usually procure your groceries?</label>
+        <select id="groceries" required>
+            <option value="1.2">Supermarket chains (+1.2 kg CO2/day)</option>
+            <option value="0.9">Online (+0.9 kg CO2/day)</option>
+            <option value="0.15">Local farmer’s market (+0.15 kg CO2/day)</option>
+        </select>
+
+        <label for="energy">What is the energy source of your home?</label>
+        <select id="energy" required>
+            <option value="-6.67">Solar powered (-6.67 kg CO2/day)</option>
+            <option value="6.67">Power plants (+6.67 kg CO2/day)</option>
+        </select>
+
+        <label for="waste">How do you dispose of your organic waste?</label>
+        <select id="waste" required>
+            <option value="-0.1">Compost (-0.1 kg CO2/day)</option>
+            <option value="0.1">Dust bin (+0.1 kg CO2/day)</option>
+        </select>
+
+        <label for="garden">Do you have a terrace or balcony garden?</label>
+        <select id="garden" required>
+            <option value="-2.5">Yes (-2.5 kg CO2/day)</option>
+            <option value="2.5">No (+2.5 kg CO2/day)</option>
+        </select>
+
+        <label for="laundry">What is your laundry choice?</label>
+        <select id="laundry" required>
+            <option value="3.28">Washer + Dryer (+3.28 kg CO2/day)</option>
+            <option value="0.82">Washer + sun dry (+0.82 kg CO2/day)</option>
+        </select>
+
+        <label for="residential">What is your residential type?</label>
+        <select id="residential" required>
+            <option value="10.25">Apartment (+10.25 kg CO2/day)</option>
+            <option value="17.42">Independent house (+17.42 kg CO2/day)</option>
+            <option value="21.52">Villa (+21.52 kg CO2/day)</option>
+        </select>
+
+        <label for="devices">What is the number of high energy devices frequently used?</label>
+        <select id="devices" required>
+            <option value="13.12">AC - 0, Water heater - 2 (+13.12 kg CO2/day)</option>
+            <option value="22.96">AC - 1, Water heater - 2 (+22.96 kg CO2/day)</option>
+            <option value="32.8">AC - 2, Water heater - 2 (+32.8 kg CO2/day)</option>
+            <option value="6.56">AC - 3, Water heater - 3 (+6.56 kg CO2/day)</option>
+        </select>
+
+        <button type="submit">Calculate Footprint</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <script>
+        document.getElementById('footprintForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const diet = parseFloat(document.getElementById('diet').value);
+            const transport = parseFloat(document.getElementById('transport').value);
+            const groceries = parseFloat(document.getElementById('groceries').value);
+            const energy = parseFloat(document.getElementById('energy').value);
+            const waste = parseFloat(document.getElementById('waste').value);
+            const garden = parseFloat(document.getElementById('garden').value);
+            const laundry = parseFloat(document.getElementById('laundry').value);
+            const residential = parseFloat(document.getElementById('residential').value);
+            const devices = parseFloat(document.getElementById('devices').value);
+
+            const totalFootprint = diet + transport + groceries + energy + waste + garden + laundry + residential + devices;
+
+            document.getElementById('result').innerText = `Your estimated carbon footprint is: ${totalFootprint.toFixed(2)} kg CO2 per day.`;
+        });
+    </script>
 </body>
 </html>
